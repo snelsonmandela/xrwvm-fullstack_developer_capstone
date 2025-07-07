@@ -124,3 +124,13 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+/* In style.css */
+h1 {
+  color: #2c3e50;
+}
+.container {
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 10px;
+}
