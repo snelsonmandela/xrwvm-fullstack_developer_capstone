@@ -16,6 +16,8 @@ from django.views.decorators.csrf import csrf_exempt
 from .populate import initiate
 
 
+
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -86,3 +88,25 @@ def registration(request):
 # Create a `add_review` view to submit a review
 # def add_review(request):
 # ...
+from .models import CarMake, CarModel
+from django.http import JsonResponse
+from .populate import initiate
+
+def get_cars(request):
+    if CarMake.objects.count() == 0:
+        initiate()
+
+    cars = []
+
+    # Get the first 5 car makes
+    car_makes = CarMake.objects.all()[:5]
+
+    for car_make in car_makes:
+        # Get 3 car models under each make
+        car_models = CarModel.objects.filter(make=car_make)[:3]
+        cars.append({
+            "CarMake": car_make.name,
+            "CarModels": [model.name for model in car_models]
+        })
+
+    return JsonResponse({"CarMakes": cars})
